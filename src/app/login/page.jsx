@@ -1,23 +1,22 @@
 "use client";
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import useAuth from '../../utils/useAuth';
-import ReusableForm from '../../components/ReusableForm';
-import AuthAside from '../../components/AuthAside';
-import TallySide from '../../assets/TallySide.svg';
-import WavyLines from '../../assets/WavyLines.svg';
-import * as Yup from 'yup';
-import { auth } from '../../utils/firebase'; 
-
+import React, { useState } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../utils/firebase"; 
+import { useRouter } from "next/navigation";
+import * as Yup from "yup";
+import ReusableForm from "../../components/ReusableForm";
+import AuthAside from "../../components/AuthAside";
+import TallySide from "../../assets/TallySide.svg";
+import WavyLines from "../../assets/WavyLines.svg";
 
 const Login = () => {
-  const { loading : authLoading ,authenticated } = useAuth();
-  const router = useRouter();
-  const [loading, setLoading] = useState(authLoading);
+  const router = useRouter(); 
+  const [loading, setLoading] = useState(false);
 
-
-
-  const initialValues = { email: "", password: "" };
+  const initialValues = {
+    email: "",
+    password: "",
+  };
 
   const validationSchema = Yup.object({
     email: Yup.string()
@@ -29,16 +28,21 @@ const Login = () => {
   });
 
   const onSubmit = async (values) => {
+    console.log('Form submitted with values:', values); 
     setLoading(true);
     try {
       await signInWithEmailAndPassword(auth, values.email, values.password);
-      router.push("/home"); // Navigate to the home page after successful login
+      console.log("Login successful");
+      router.push("/home");
+
     } catch (error) {
-      console.error('Login failed:', error.message);
+
+      console.error("Error logging in:", error.message);
     } finally {
-      setLoading(false); // Ensure loading is set to false in both success and error cases
+      setLoading(false);
     }
   };
+  
 
   const fields = [
     {
@@ -55,13 +59,6 @@ const Login = () => {
     },
   ];
 
-
-  useEffect(() => {
-    if (!loading && authenticated) {
-      router.push('/home');
-    }
-  }, [loading, authenticated, router]);
-
   return (
     <main className="h-screen flex flex-col md:flex-row">
       <AuthAside
@@ -69,25 +66,34 @@ const Login = () => {
         text="'Het verbinden van nieuwkomers met de samenleving door hun taal te verbeteren'"
       />
       <div className="w-full md:w-1/2 bg-white flex flex-col p-8 relative">
-        <div className="max-w-md mx-auto w-full">
+        <div className="max-w-md mx-auto w-full relative z-10">
           <h1 className="text-3xl font-bold mb-2 text-blue-900">
-            Welcome to Taaly!
+            Welcome Back!
           </h1>
-          <h2 className="text-xl mb-8">Login Here</h2>
+          <h2 className="text-xl mb-8">Log In Here</h2>
           <ReusableForm
             initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={onSubmit}
             fields={fields}
-            buttonLabel="Login"
+            buttonLabel="Log In"
             loading={loading}
           />
-          <img
-            src={WavyLines.src}
-            alt="Wavy Lines"
-            className="absolute bottom-0 left-0 w-full"
-          />
+          <span className="mt-4 block text-center text-blue-600">
+            Don’t have an account?{" "}
+            <button 
+              onClick={() => router.push('/signup')} 
+              className="text-blue-500 underline"
+            >
+              Sign up now
+            </button>
+          </span>
         </div>
+        <img
+          src={WavyLines.src}
+          alt="Wavy Lines"
+          className="absolute bottom-0 left-0 w-full z-0"
+        />
       </div>
     </main>
   );

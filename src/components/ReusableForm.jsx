@@ -1,13 +1,16 @@
-// components/ReusableForm.js
-import React from 'react';
 import { Formik, Field, Form } from 'formik';
 
 const ReusableForm = ({ initialValues, validationSchema, onSubmit, fields, buttonLabel, loading }) => {
+  console.log('Rendering ReusableForm'); // Debug log
+
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={onSubmit}
+      onSubmit={(values) => {
+        console.log('Submitting form values:', values); // Debug log
+        onSubmit(values); // Call the actual onSubmit function
+      }}
     >
       {({ errors, touched, isSubmitting }) => (
         <Form className="space-y-4">
