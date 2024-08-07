@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { signOut } from "firebase/auth";
 import useAuth from "../../utils/useAuth";
 import { auth } from "../../utils/firebase";
-
+import jenny from '../../assets/Jenny.png'
 const Home = () => {
   const { loading, authenticated } = useAuth();
   const router = useRouter();
@@ -139,7 +139,7 @@ function Header() {
         <div className="flex items-center">
           <span className="mr-2 text-gray-700">Hi, Jenny</span>
           <img
-            src="/jenny-avatar.jpg"
+            src='../../assets/Jenny.png'
             alt="User"
             className="h-8 w-8 rounded-full"
           />
@@ -192,7 +192,7 @@ function StatCards() {
       {stats.map((stat) => (
         <div
           key={stat.title}
-          className="bg-indigo-600 text-white rounded-lg p-4 flex items-center"
+          className="bg-indigo-500 text-white rounded-lg p-4 flex items-center"
         >
           <div className="text-3xl mr-3">{stat.icon}</div>
           <div>
@@ -317,9 +317,9 @@ function LearnersList() {
 
 function OrganizationCards() {
   const organizations = [
-    { name: "Amsterdam Organization", color: "bg-green-200" },
-    { name: "Amsterdam Organization", color: "bg-yellow-200" },
-    { name: "Amsterdam Organization", color: "bg-red-200" },
+    { name: "Amsterdam Organization", color: "bg-green-100" },
+    { name: "Amsterdam Organization", color: "bg-yellow-100" },
+    { name: "Amsterdam Organization", color: "bg-red-100" },
   ];
 
   return (
@@ -328,12 +328,12 @@ function OrganizationCards() {
         {organizations.map((org, index) => (
           <div
             key={index}
-            className={`${org.color} rounded-lg p-6 w-64 flex-shrink-0`}
+            className={`${org.color} rounded-lg p-6 w-80 flex-shrink-0`}
           >
             <h3 className="text-lg font-semibold mb-2">{org.name}</h3>
             <p className="text-sm text-gray-600 mb-4">*Location</p>
             <p className="text-sm mb-4">*Overview about the organization</p>
-            <button className="bg-gray-800 text-white px-4 py-2 rounded">
+            <button className="bg-indigo-600 text-white px-4 py-2 rounded">
               Details
             </button>
           </div>
