@@ -1,17 +1,21 @@
 "use client";
-import React, { useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../utils/firebase";
-import { useRouter } from "next/navigation";
-import * as Yup from "yup";
-import ReusableForm from "../../components/ReusableForm";
-import AuthAside from "../../components/AuthAside";
-import TallySide from "../../assets/TallySide.svg";
-import WavyLines from "../../assets/WavyLines.svg";
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import useAuth from '../../utils/useAuth';
+import ReusableForm from '../../components/ReusableForm';
+import AuthAside from '../../components/AuthAside';
+import TallySide from '../../assets/TallySide.svg';
+import WavyLines from '../../assets/WavyLines.svg';
+import * as Yup from 'yup';
+import { auth } from '../../utils/firebase'; 
+
 
 const Login = () => {
-  const router = useRouter(); 
-  const [loading, setLoading] = useState(false);
+  const { loading : authLoading ,authenticated } = useAuth();
+  const router = useRouter();
+  const [loading, setLoading] = useState(authLoading);
+
+
 
   const initialValues = { email: "", password: "" };
 
@@ -24,17 +28,16 @@ const Login = () => {
       .required("Password is required"),
   });
 
-  const onSubmit = (values) => {
+  const onSubmit = async (values) => {
     setLoading(true);
-    signInWithEmailAndPassword(auth, values.email, values.password)
-      .then(() => {
-        setLoading(false);
-        router.push("/home"); // Navigate to the home page
-      })
-      .catch((error) => {
-        setLoading(false);
-        console.error(error.message);
-      });
+    try {
+      await signInWithEmailAndPassword(auth, values.email, values.password);
+      router.push("/home"); // Navigate to the home page after successful login
+    } catch (error) {
+      console.error('Login failed:', error.message);
+    } finally {
+      setLoading(false); // Ensure loading is set to false in both success and error cases
+    }
   };
 
   const fields = [
@@ -51,6 +54,13 @@ const Login = () => {
       label: "Password",
     },
   ];
+
+
+  useEffect(() => {
+    if (!loading && authenticated) {
+      router.push('/home');
+    }
+  }, [loading, authenticated, router]);
 
   return (
     <main className="h-screen flex flex-col md:flex-row">
