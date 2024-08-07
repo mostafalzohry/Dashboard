@@ -179,6 +179,8 @@ function Sidebar() {
   );
 }
 
+
+
 function StatCards() {
   const stats = [
     { title: "Total Learners", value: 12, icon: "👥" },
@@ -192,7 +194,7 @@ function StatCards() {
       {stats.map((stat) => (
         <div
           key={stat.title}
-          className="bg-indigo-500 text-white rounded-lg p-4 flex items-center"
+          className="bg-indigo-400 text-white rounded-lg p-4 flex items-center"
         >
           <div className="text-3xl mr-3">{stat.icon}</div>
           <div>
@@ -216,6 +218,8 @@ function MainContent() {
 }
 
 function LearnersList() {
+  const [activeTab, setActiveTab] = useState('Learners');
+
   const learners = [
     {
       name: "Haitham Badran",
@@ -243,12 +247,49 @@ function LearnersList() {
     },
   ];
 
+  const languageBuddies = [
+    {
+      name: "John Doe",
+      level: "Advanced C1",
+      program: "Adults",
+      organization: "Rotterdam",
+      rating: "8/10",
+      hours: "10",
+    },
+    {
+      name: "Jane Smith",
+      level: "Advanced C1",
+      program: "Adults",
+      organization: "Utrecht",
+      rating: "9/10",
+      hours: "12",
+    },
+    {
+      name: "Alex Johnson",
+      level: "Advanced C1",
+      program: "Adults",
+      organization: "Amsterdam",
+      rating: "7/10",
+      hours: "8",
+    },
+  ];
+
   return (
     <div className="bg-white shadow rounded-lg p-6 mb-8">
       <div className="flex justify-between items-center mb-4">
         <div className="flex space-x-4">
-          <button className="text-indigo-600 font-semibold">Learners</button>
-          <button className="text-gray-400">Language Buddies</button>
+          <button 
+            className={`font-semibold ${activeTab === 'Learners' ? 'text-indigo-600' : 'text-gray-400'}`}
+            onClick={() => setActiveTab('Learners')}
+          >
+            Learners
+          </button>
+          <button 
+            className={`font-semibold ${activeTab === 'Language Buddies' ? 'text-indigo-600' : 'text-gray-400'}`}
+            onClick={() => setActiveTab('Language Buddies')}
+          >
+            Language Buddies
+          </button>
         </div>
         <div className="relative">
           <input
@@ -274,37 +315,37 @@ function LearnersList() {
       </div>
       <table className="w-full">
         <thead>
-          <tr className="text-left text-gray-500">
-            <th className="py-2">Name</th>
-            <th>Level</th>
-            <th>Program</th>
-            <th>Organization</th>
-            <th>Rating</th>
-            <th>Hours spent</th>
-            <th></th>
+          <tr className="text-left text-gray-500 border-b">
+            <th className="py-3">Name</th>
+            <th className="py-3">Level</th>
+            <th className="py-3">Program</th>
+            <th className="py-3">Organization</th>
+            <th className="py-3">Rating</th>
+            <th className="py-3">Hours spent</th>
+            <th className="py-3"></th>
           </tr>
         </thead>
         <tbody>
-          {learners.map((learner) => (
-            <tr key={learner.name} className="border-t">
-              <td className="py-3 flex items-center">
+          {(activeTab === 'Learners' ? learners : languageBuddies).map((person, index) => (
+            <tr key={index} className="border-b last:border-b-0">
+              <td className="py-4 flex items-center">
                 <img
-                  src="/avatar-placeholder.jpg"
-                  alt={learner.name}
+                  src={`/avatar-placeholder-${index + 1}.jpg`}
+                  alt={person.name}
                   className="w-8 h-8 rounded-full mr-2"
                 />
-                {learner.name}
+                {person.name}
               </td>
-              <td>{learner.level}</td>
-              <td>{learner.program}</td>
-              <td>{learner.organization}</td>
-              <td>{learner.rating}</td>
-              <td>
+              <td className="py-4">{person.level}</td>
+              <td className="py-4">{person.program}</td>
+              <td className="py-4">{person.organization}</td>
+              <td className="py-4">{person.rating}</td>
+              <td className="py-4">
                 <div className="bg-gray-200 rounded-full w-12 h-12 flex items-center justify-center">
-                  <span className="text-sm font-semibold">{learner.hours}</span>
+                  <span className="text-sm font-semibold">{person.hours}</span>
                 </div>
               </td>
-              <td>
+              <td className="py-4">
                 <button className="text-indigo-600">View →</button>
               </td>
             </tr>
