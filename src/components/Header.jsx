@@ -1,19 +1,32 @@
+"use client"
+import { signOut } from 'firebase/auth';
 import Jenny from "../assets/Jenny.png";
+import { auth } from '@/utils/firebase';
 
 function Header() {
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      window.location.href = "/login"; 
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
+  };
+
   return (
     <header className="bg-white shadow-sm p-4">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         <div className="flex items-center">
           <svg
-            width="60" 
-            height="52" 
+            width="60"
+            height="52"
             viewBox="0 0 85 75"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             className="mr-2"
           >
-            <svg
+              <svg
               width="85"
               height="75"
               viewBox="0 0 85 75"
@@ -62,8 +75,9 @@ function Header() {
                 </clipPath>
               </defs>
             </svg>
+            {/* SVG contents */}
           </svg>
-          <span className="text-indigo-600 font-bold text-2xl">Taaly</span> {/* Increased font size */}
+          <span className="text-indigo-600 font-bold text-2xl">Taaly</span>
         </div>
         <div className="flex items-center flex-1 justify-center">
           <div className="relative w-1/2">
@@ -88,9 +102,29 @@ function Header() {
             </svg>
           </div>
         </div>
-        <div className="flex items-center">
-          <span className="mr-2 text-gray-700 text-lg">Hi, Jenny</span> {/* Increased font size */}
-          <img src={Jenny.src} alt="User" className="h-12 w-12 rounded-full" /> {/* Increased size */}
+        <div className="flex items-center space-x-4">
+          <span className="text-gray-700 text-lg">Hi, Jenny</span>
+          <img src={Jenny.src} alt="User" className="h-12 w-12 rounded-full" />
+          <button
+            onClick={handleLogout}
+            className="flex items-center text-gray-700 hover:text-red-600 focus:outline-none"
+          >
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M17 16l4-4m0 0l-4-4m4 4H7m10 4H7a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v12a2 2 0 01-2 2z"
+              />
+            </svg>
+            <span className="ml-2">Log Out</span>
+          </button>
         </div>
       </div>
     </header>
