@@ -11,7 +11,7 @@ function Sidebar() {
     ];
   
     return (
-      <aside className="w-64 bg-white shadow-md p-4">
+      <aside className="w-64 custom-light-purple shadow-md p-4">
         <nav className="mt-5">
           {menuItems.map((item) => (
             <a

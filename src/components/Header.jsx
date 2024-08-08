@@ -15,7 +15,7 @@ function Header() {
   };
 
   return (
-    <header className="bg-white shadow-sm p-4">
+    <header className="custom-light-purple shadow-sm p-4">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         <div className="flex items-center">
           <svg
