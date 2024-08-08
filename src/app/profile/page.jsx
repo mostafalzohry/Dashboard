@@ -64,7 +64,7 @@ const Profile = () => {
             {/* Profile Section */}
             <div className="col-span-1 bg-white p-6 rounded-lg shadow-lg flex flex-col items-center">
               <img
-                src={profilePic}
+                src={userDoc.profilePic ?? profilePic}
                 alt="Profile"
                 className="w-24 h-24 rounded-full mb-4"
               />
@@ -86,7 +86,7 @@ const Profile = () => {
                 <p>Loading...</p>
               ) : authenticated ? (
                 <h2 className="text-xl font-semibold text-gray-900">
-                  Haitham Badran
+                  {userDoc.FullName}
                 </h2>
               ) : (
                 <p>Please log in</p>
@@ -101,11 +101,11 @@ const Profile = () => {
               <div className="w-full space-y-2">
                 <div className="flex items-center text-gray-500 text-sm">
                   <span className="mr-2">📧</span>
-                  <span>haithambadran@gmail.com</span>
+                  <span>{userDoc.email}</span>
                 </div>
                 <div className="flex items-center text-gray-500 text-sm">
                   <span className="mr-2">📞</span>
-                  <span>+31 71 131 9858</span>
+                  <span>{userDoc.phoneNumber}</span>
                 </div>
                 <div className="flex items-center text-gray-500 text-sm">
                   <span className="mr-2">📍</span>

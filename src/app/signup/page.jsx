@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth, db } from "../../utils/firebase";
+import { auth, firestore } from "../../utils/firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import * as Yup from "yup";
@@ -15,20 +15,19 @@ const Signup = () => {
   const [loading, setLoading] = useState(false);
 
   const initialValues = {
-    firstName: "",
-    lastName: "",
+    FullName: "",
     email: "",
     password: "",
     confirmPassword: "",
+    phoneNumber: "", 
+
   };
 
   const validationSchema = Yup.object({
-    firstName: Yup.string()
+    FullName: Yup.string()
       .min(3, "Must be 3 characters or more")
       .required("First name is required"),
-    lastName: Yup.string()
-      .min(3, "Must be 3 characters or more")
-      .required("Last name is required"),
+   
     email: Yup.string()
       .email("Invalid email address")
       .required("Email is required"),
@@ -38,6 +37,9 @@ const Signup = () => {
     confirmPassword: Yup.string()
       .oneOf([Yup.ref("password"), null], "Passwords must match")
       .required("Confirm Password is required"),
+    phoneNumber: Yup.string()
+      .matches(/^\+\d{1,4}\d{6,}$/, "Please type country code and valid phone number")
+      .required("Phone number is required"),
   });
 
   const onSubmit = async (values) => {
@@ -52,10 +54,10 @@ const Signup = () => {
       await updateProfile(user, {
         displayName: `${values.firstName} ${values.lastName}`,
       });
-      await setDoc(doc(db, "users", user.uid), {
-        firstName: values.firstName,
-        lastName: values.lastName,
+      await setDoc(doc(firestore, "users", user.uid), {
+        FullName: values.FullName,
         email: values.email,
+        phoneNumber: values.phoneNumber,
         uid: user.uid,
       });
       console.log("User created:", user);
@@ -68,17 +70,12 @@ const Signup = () => {
 
   const fields = [
     {
-      name: "firstName",
+      name: "FullName",
       type: "text",
-      placeholder: "First name",
-      label: "First name",
+      placeholder: "Full Name",
+      label: "Full Name",
     },
-    {
-      name: "lastName",
-      type: "text",
-      placeholder: "Last name",
-      label: "Last name",
-    },
+   
     {
       name: "email",
       type: "email",
@@ -96,6 +93,12 @@ const Signup = () => {
       type: "password",
       placeholder: "Confirm Password",
       label: "Confirm Password",
+    },
+    {
+      name: "phoneNumber",
+      type: "text",
+      placeholder: "+1234567890",
+      label: "Phone Number",
     },
   ];
 

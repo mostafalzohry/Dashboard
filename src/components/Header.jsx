@@ -2,19 +2,28 @@
 import { signOut } from "firebase/auth";
 import Jenny from "../assets/Jenny.png";
 import { auth } from "@/utils/firebase";
+import { useAuth } from "@/utils/useAuth";
+import { useRouter } from "next/navigation";
 
 function Header() {
+
+
+  const { userDoc } = useAuth(); 
+
+  const router = useRouter();
+
+
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      window.location.href = "/login";
+      router.push("/login");
     } catch (error) {
       console.error("Error logging out:", error);
     }
   };
 
   const handleNavigation = () => {
-    window.location.href = "/profile";
+    router.push("/profile");
   };
 
   return (
@@ -110,9 +119,9 @@ function Header() {
             onClick={handleNavigation}
             className="flex items-center cursor-pointer"
           >
-            <span className="text-gray-700 text-lg mr-2">Hi, Jenny</span>
+            <span className="text-gray-700 text-lg mr-2">Hi, {userDoc.FullName}</span>
             <img
-              src={Jenny.src}
+              src={userDoc.profilePic ?? Jenny.src}
               alt="User"
               className="h-12 w-12 rounded-full"
             />
