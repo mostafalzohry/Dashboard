@@ -78,17 +78,7 @@ const Profile = () => {
         </div>
       </div>
 
-      {/* Circular Cards */}
-      <div className="grid grid-cols-2 gap-4">
-        <div className="bg-white p-6 rounded-lg shadow-lg text-center">
-          <h3 className="text-xl font-semibold text-purple-600">200 hours</h3>
-          <p className="text-sm text-gray-500">Hours spent</p>
-        </div>
-        <div className="bg-white p-6 rounded-lg shadow-lg text-center">
-          <h3 className="text-xl font-semibold text-green-600">200 Remaining</h3>
-          <p className="text-sm text-gray-500">Credit spent</p>
-        </div>
-      </div>
+  
 
     
 
@@ -258,6 +248,19 @@ const CreditSpent = () => {
 };
 
 
+
+    {/* Circular Cards */}
+      {/* <div className="grid grid-cols-2 gap-4">
+        <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+          <h3 className="text-xl font-semibold text-purple-600">200 hours</h3>
+          <p className="text-sm text-gray-500">Hours spent</p>
+        </div>
+        <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+          <h3 className="text-xl font-semibold text-green-600">200 Remaining</h3>
+          <p className="text-sm text-gray-500">Credit spent</p>
+        </div>
+      </div> */}
+      
 // <div className="min-h-screen bg-gray-100 p-8">
 //   <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-6">
 
