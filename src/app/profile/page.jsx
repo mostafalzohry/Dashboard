@@ -6,11 +6,11 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "../../utils/useAuth";
 import { useEffect, useState } from "react";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { app, firestore} from "../../utils/firebase";
+import { app, firestore } from "../../utils/firebase";
 import { doc, updateDoc } from "firebase/firestore";
 
 const Profile = () => {
-  const { loading, authenticated , userDoc, setUserDoc } = useAuth();
+  const { loading, authenticated, userDoc, setUserDoc } = useAuth();
   const [uploading, setUploading] = useState(false);
   const [profilePic, setProfilePic] = useState(ProfileAvatar.src);
   const router = useRouter();
@@ -27,27 +27,25 @@ const Profile = () => {
     );
   }
 
-
-
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
     if (!file) return;
-  
+
     const storage = getStorage(app);
     const storageRef = ref(storage, `profile-pics/${file.name}`);
-  
+
     try {
       setUploading(true);
       await uploadBytes(storageRef, file);
       const url = await getDownloadURL(storageRef);
-  
+
       if (userDoc && userDoc.uid) {
         const userDocRef = doc(firestore, `users/${userDoc.uid}`);
         await updateDoc(userDocRef, { profilePic: url });
-  
+
         setUserDoc({ ...userDoc, profilePic: url });
       }
-  
+
       setProfilePic(url);
     } catch (error) {
       console.error("Error uploading file: ", error);
@@ -61,64 +59,84 @@ const Profile = () => {
       <div className="flex flex-1">
         <div className="min-h-screen bg-white p-8">
           <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-6">
-            {/* Profile Section */}
-            <div className="col-span-1 bg-white p-6 rounded-lg shadow-lg flex flex-col items-center">
-              <img
-                src={userDoc.profilePic ?? profilePic}
-                alt="Profile"
-                className="w-24 h-24 rounded-full mb-4"
-              />
-              <input
-                id="fileInput"
-                type="file"
-                accept="image/*"
-                onChange={handleFileChange}
-                className="hidden"
-              />
-              <label
-                htmlFor="fileInput"
-                className="text-blue-500 cursor-pointer mt-2 mb-4"
-              >
-                Change Profile Picture
-              </label>
-              {uploading && <p>Uploading...</p>}
-              {loading ? (
-                <p>Loading...</p>
-              ) : authenticated ? (
-                <h2 className="text-xl font-semibold text-gray-900">
-                  {userDoc.FullName}
-                </h2>
-              ) : (
-                <p>Please log in</p>
-              )}
-              <p className="text-sm text-gray-500 mb-4">
-                Marketing Coordinator
-              </p>
-              <p className="text-center text-sm text-gray-700 mb-6">
-                “I’m a marketing coordinator who recently moved to Netherlands
-                and I'm struggling with the Dutch language.”
-              </p>
-              <div className="w-full space-y-2">
-                <div className="flex items-center text-gray-500 text-sm">
-                  <span className="mr-2">📧</span>
-                  <span>{userDoc.email}</span>
+
+            <div className="bg-custom-light-purple min-h-screen p-6">
+              <div className="flex items-center mb-6">
+                <span className="text-2xl mr-4">←</span>
+                <h1 className="text-2xl font-semibold">{userDoc.FullName}</h1>
+              </div>
+
+              <div className="bg-custom-light-purple p-6  max-w-md mx-auto">
+                <div className="flex flex-col items-center mb-4">
+                  <img
+                    src={userDoc.profilePic ?? profilePic}
+                    alt="Profile"
+                    className="w-24 h-24 rounded-full border-4 border-blue-500 mb-2"
+                  />
+                  <input
+                    id="fileInput"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    className="hidden"
+                  />
+                  <label
+                    htmlFor="fileInput"
+                    className="text-blue-500 cursor-pointer text-sm"
+                  >
+                    {uploading ? "Uploading..." : "Change Profile Picture"}
+                  </label>
                 </div>
-                <div className="flex items-center text-gray-500 text-sm">
-                  <span className="mr-2">📞</span>
-                  <span>{userDoc.phoneNumber}</span>
-                </div>
-                <div className="flex items-center text-gray-500 text-sm">
-                  <span className="mr-2">📍</span>
-                  <span>6391 Elgin St. Celina, Delaware 10299</span>
+                <h3 className="text-center font-semibold mb-2">Bio</h3>
+                <p className="text-center text-sm text-gray-700 mb-6">
+                  "I'm a marketing coordinator who recently moved to netherlands
+                  and I'm struggling with the dutch language"
+                </p>
+
+                <div className="space-y-4">
+                  <div className="flex items-center">
+                    <span className="mr-3">📧</span>
+                    <div>
+                      <p className="font-semibold">E-mail</p>
+                      <p className="text-gray-700">{userDoc.email}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center">
+                    <span className="mr-3">📞</span>
+                    <div>
+                      <p className="font-semibold">Mobile</p>
+                      <p className="text-gray-700">{userDoc.phoneNumber}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center">
+                    <span className="mr-3">📍</span>
+                    <div>
+                      <p className="font-semibold">Location</p>
+                      <p className="text-gray-700">
+                        6391 Elgin St. Celina, Delaware 10299
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center">
+                    <span className="mr-3">🎓</span>
+                    <div>
+                      <p className="font-semibold">Highest Education</p>
+                      <p className="text-gray-700">BA Graphic Design</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center">
+                    <span className="mr-3">💼</span>
+                    <div>
+                      <p className="font-semibold">Latest work experience</p>
+                      <p className="text-gray-700">Marketing Coordinator</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Right Column */}
             <div className="lg:col-span-3 space-y-6">
-              {/* Top Cards */}
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                {/* Mother Language */}
                 <div className="bg-custom-light-purple p-4 rounded-lg shadow-lg">
                   <h3 className="text-sm font-semibold text-purple-600 mb-2">
                     Mother Language
@@ -130,7 +148,6 @@ const Profile = () => {
                   </div>
                 </div>
 
-                {/* Other Languages */}
                 <div className="bg-custom-light-purple p-4 rounded-lg shadow-lg">
                   <h3 className="text-sm font-semibold text-purple-600 mb-2">
                     Other Languages
@@ -145,7 +162,6 @@ const Profile = () => {
                   </div>
                 </div>
 
-                {/* Level */}
                 <div className="bg-custom-light-purple p-4 rounded-lg shadow-lg">
                   <h3 className="text-sm font-semibold text-purple-600 mb-2">
                     Level
@@ -157,7 +173,6 @@ const Profile = () => {
                   </div>
                 </div>
 
-                {/* Interests */}
                 <div className="bg-custom-light-purple p-4 rounded-lg shadow-lg">
                   <h3 className="text-sm font-semibold text-purple-600 mb-2">
                     Interests
@@ -173,11 +188,8 @@ const Profile = () => {
                 </div>
               </div>
 
-              {/* Main Content */}
               <div className="flex flex-col md:flex-row  rounded-lg shadow-lg">
-                {/* Left Section */}
                 <div className="flex flex-col space-y-8 md:w-1/3">
-                  {/* Hours Spent */}
                   <div className="flex flex-col items-center bg-custom-light-purple p-6 rounded-lg">
                     <p className="mt-4 text-gray-700 text-lg">Hours spent</p>
                     <p className="text-gray-600 text-sm mb-2">
@@ -214,7 +226,6 @@ const Profile = () => {
                     </div>
                   </div>
 
-                  {/* Credit Spent */}
                   <div className="flex flex-col items-center   bg-custom-light-purple  p-6 rounded-lg">
                     <p className="mt-4 text-gray-700 text-lg">Remaining</p>
                     <p className="text-gray-600 text-sm mb-2">
