@@ -4,6 +4,9 @@ import { useRouter } from "next/navigation";
 import { signOut } from "firebase/auth";
 import useAuth from "../../utils/useAuth";
 import { auth } from "../../utils/firebase";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../utils/firebase"; // Adjust the path to your firebase config
+
 import jenny from '../../assets/Jenny.png'
 const Home = () => {
   const { loading, authenticated } = useAuth();
@@ -219,60 +222,27 @@ function MainContent() {
 
 function LearnersList() {
   const [activeTab, setActiveTab] = useState('Learners');
+  const [learners, setLearners] = useState([]);
+  const [languageBuddies, setLanguageBuddies] = useState([]);
 
-  const learners = [
-    {
-      name: "Haitham Badran",
-      level: "Medium B2",
-      program: "Adults",
-      organization: "Amsterdam",
-      rating: "7/10",
-      hours: "7.5",
-    },
-    {
-      name: "Hebah Abdullah",
-      level: "Medium B2",
-      program: "Adults",
-      organization: "Amsterdam",
-      rating: "6/10",
-      hours: "7.5",
-    },
-    {
-      name: "Miles Esther",
-      level: "Medium B2",
-      program: "Adults",
-      organization: "Amsterdam",
-      rating: "9/10",
-      hours: "7.5",
-    },
-  ];
+  const fetchData = async () => {
+    try {
+      const learnersSnapshot = await getDocs(collection(db, "learners"));
+      const learnersData = learnersSnapshot.docs.map(doc => doc.data());
 
-  const languageBuddies = [
-    {
-      name: "John Doe",
-      level: "Advanced C1",
-      program: "Adults",
-      organization: "Rotterdam",
-      rating: "8/10",
-      hours: "10",
-    },
-    {
-      name: "Jane Smith",
-      level: "Advanced C1",
-      program: "Adults",
-      organization: "Utrecht",
-      rating: "9/10",
-      hours: "12",
-    },
-    {
-      name: "Alex Johnson",
-      level: "Advanced C1",
-      program: "Adults",
-      organization: "Amsterdam",
-      rating: "7/10",
-      hours: "8",
-    },
-  ];
+      const languageBuddiesSnapshot = await getDocs(collection(db, "languageBuddies"));
+      const languageBuddiesData = languageBuddiesSnapshot.docs.map(doc => doc.data());
+
+      setLearners(learnersData);
+      setLanguageBuddies(languageBuddiesData);
+    } catch (error) {
+      console.error("Error fetching data from Firestore: ", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <div className="bg-white shadow rounded-lg p-6 mb-8">
@@ -355,6 +325,7 @@ function LearnersList() {
     </div>
   );
 }
+
 
 function OrganizationCards() {
   const organizations = [
