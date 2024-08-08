@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../utils/firebase"; 
+import { auth } from "../../utils/firebase";
 import { useRouter } from "next/navigation";
 import * as Yup from "yup";
 import ReusableForm from "../../components/ReusableForm";
@@ -10,8 +10,9 @@ import TallySide from "../../assets/TallySide.svg";
 import WavyLines from "../../assets/WavyLines.svg";
 
 const Login = () => {
-  const router = useRouter(); 
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const initialValues = {
     email: "",
@@ -28,21 +29,19 @@ const Login = () => {
   });
 
   const onSubmit = async (values) => {
-    console.log('Form submitted with values:', values); 
     setLoading(true);
+    setErrorMessage("");
+
     try {
       await signInWithEmailAndPassword(auth, values.email, values.password);
-      console.log("Login successful");
       router.push("/home");
-
     } catch (error) {
-
+      setErrorMessage("Invalid email or password. Please try again.");
       console.error("Error logging in:", error.message);
     } finally {
       setLoading(false);
     }
   };
-  
 
   const fields = [
     {
@@ -58,45 +57,48 @@ const Login = () => {
       label: "Password",
     },
   ];
-
   return (
-<main className="h-screen flex flex-col md:flex-row">
-  <AuthAside
-    imageSrc={TallySide.src}
-    text="'Het verbinden van nieuwkomers met de samenleving door hun taal te verbeteren'"
-  />
-  <div className="flex-1 bg-white flex flex-col justify-center p-6 md:p-8 relative h-full">
-    <div className="max-w-sm md:max-w-md mx-auto w-full relative z-10">
-      <h1 className="text-2xl md:text-3xl font-bold mb-2 text-blue-900">
-        Welcome Back!
-      </h1>
-      <h2 className="text-lg md:text-xl mb-6 md:mb-8">Log In Here</h2>
-      <ReusableForm
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={onSubmit}
-        fields={fields}
-        buttonLabel="Log In"
-        loading={loading}
+    <main className="h-screen flex flex-col md:flex-row">
+      <AuthAside
+        imageSrc={TallySide.src}
+        text="'Het verbinden van nieuwkomers met de samenleving door hun taal te verbeteren'"
       />
-      <span className="mt-4 block text-center text-blue-600">
-        Don’t have an account?{" "}
-        <button 
-          onClick={() => router.push('/signup')} 
-          className="text-blue-500 underline"
-        >
-          Sign up now
-        </button>
-      </span>
-    </div>
-    <img
-  src={WavyLines.src}
-  alt="Wavy Lines"
-  className="absolute bottom-0 left-0 w-full z-0 block"
-/>
-  </div>
-</main>
 
+      <div className="flex-1 bg-white flex flex-col p-8  p-6  relative h-full">
+        <div className="max-w-sm md:max-w-md mx-auto w-full relative z-10">
+          <h1 className="text-2xl md:text-3xl font-bold mb-2 text-blue-900">
+            Welcome Back!
+          </h1>
+          <h2 className="text-xl mb-8">Log In Here</h2>
+          <ReusableForm
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={onSubmit}
+            fields={fields}
+            buttonLabel="Log In"
+            loading={loading}
+            errorMessage={errorMessage}
+          />
+          {errorMessage && (
+            <p className="mt-4 text-red-600 text-center">{errorMessage}</p>
+          )}
+          <span className="mt-4 block text-center text-blue-600">
+            Don’t have an account?{" "}
+            <button
+              onClick={() => router.push("/signup")}
+              className="text-blue-500 underline"
+            >
+              Sign up now
+            </button>
+          </span>
+        </div>
+        <img
+          src={WavyLines.src}
+          alt="Wavy Lines"
+          className="absolute bottom-0 left-0 w-full z-0 block"
+        />
+      </div>
+    </main>
   );
 };
 

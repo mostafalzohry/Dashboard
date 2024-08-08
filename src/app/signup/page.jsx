@@ -1,8 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth, db } from "../../utils/firebase"; 
-import { doc, setDoc } from "firebase/firestore"; 
+import { auth, db } from "../../utils/firebase";
+import { doc, setDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import * as Yup from "yup";
 import ReusableForm from "../../components/ReusableForm";
@@ -11,7 +11,7 @@ import TallySide from "../../assets/TallySide.svg";
 import WavyLines from "../../assets/WavyLines.svg";
 
 const Signup = () => {
-  const router = useRouter(); 
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
 
   const initialValues = {
@@ -105,12 +105,13 @@ const Signup = () => {
         imageSrc={TallySide.src}
         text="'Het verbinden van nieuwkomers met de samenleving door hun taal te verbeteren'"
       />
-      <div className="flex-1 bg-white flex flex-col justify-center p-6 md:p-8 relative h-full">
+
+      <div className="flex-1 bg-white flex flex-col p-8  p-6  relative h-full">
         <div className="max-w-sm md:max-w-md mx-auto w-full relative z-10">
           <h1 className="text-2xl md:text-3xl font-bold mb-2 text-blue-900">
             Welcome to Taaly!
           </h1>
-          <h2 className="text-lg md:text-xl mb-6 md:mb-8">Sign Up Here</h2>
+          <h2 className="text-xl mb-8">Sign Up Here</h2>
           <ReusableForm
             initialValues={initialValues}
             validationSchema={validationSchema}
@@ -121,8 +122,8 @@ const Signup = () => {
           />
           <span className="mt-4 block text-center text-blue-600">
             Already have an account?{" "}
-            <button 
-              onClick={() => router.push('/login')} 
+            <button
+              onClick={() => router.push("/login")}
               className="text-blue-500 underline"
             >
               Sign in now

@@ -1,18 +1,15 @@
 import { Formik, Field, Form } from 'formik';
 
-const ReusableForm = ({ initialValues, validationSchema, onSubmit, fields, buttonLabel, loading }) => {
-  console.log('Rendering ReusableForm'); // Debug log
-
+const ReusableForm = ({ initialValues, validationSchema, onSubmit, fields, buttonLabel, loading, errorMessage }) => {
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={(values) => {
-        console.log('Submitting form values:', values); // Debug log
-        onSubmit(values); // Call the actual onSubmit function
+        onSubmit(values);
       }}
     >
-      {({ errors, touched, isSubmitting }) => (
+      {({ errors, touched }) => (
         <Form className="space-y-4">
           {fields.map((field, index) => (
             <div key={index}>
@@ -35,9 +32,9 @@ const ReusableForm = ({ initialValues, validationSchema, onSubmit, fields, butto
           <button
             type="submit"
             className="w-full py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-700"
-            disabled={isSubmitting || loading}
+            disabled={loading}
           >
-            {isSubmitting ? "Loading..." : buttonLabel}
+            {loading ? "Loading..." : buttonLabel}
           </button>
         </Form>
       )}
