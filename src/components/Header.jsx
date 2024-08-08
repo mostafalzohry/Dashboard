@@ -6,8 +6,8 @@ function Header() {
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         <div className="flex items-center">
           <svg
-            width="40"
-            height="35"
+            width="60" 
+            height="52" 
             viewBox="0 0 85 75"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -20,7 +20,7 @@ function Header() {
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <g clip-path="url(#clip0_1_358)">
+              <g clipPath="url(#clip0_1_358)">
                 <path d="M84.3177 0H0V74.6741H84.3177V0Z" fill="#1E00B9" />
                 <path
                   d="M67.5615 40.2834C68.5132 41.2351 68.3688 42.8203 67.258 43.5775C65.9645 44.4585 64.5502 45.089 63.0859 45.4721C60.8348 46.0614 58.4629 46.0614 56.2148 45.4721C54.7504 45.089 53.3361 44.4585 52.0427 43.5775C50.9319 42.8203 50.7875 41.2351 51.7392 40.2834C51.748 40.2746 51.7598 40.2628 51.7687 40.254C52.4905 39.5321 53.6278 39.4054 54.4705 39.98C55.3544 40.581 56.3179 41.0141 57.3168 41.2734C58.846 41.6741 60.4576 41.6741 61.9868 41.2734C62.9857 41.0112 63.9492 40.581 64.8331 39.98C65.6758 39.4054 66.8131 39.5321 67.5349 40.251L67.5644 40.2805L67.5615 40.2834Z"
@@ -63,7 +63,7 @@ function Header() {
               </defs>
             </svg>
           </svg>
-          <span className="text-indigo-600 font-bold text-xl">Taaly</span>
+          <span className="text-indigo-600 font-bold text-2xl">Taaly</span> {/* Increased font size */}
         </div>
         <div className="flex items-center flex-1 justify-center">
           <div className="relative w-1/2">
@@ -89,11 +89,12 @@ function Header() {
           </div>
         </div>
         <div className="flex items-center">
-          <span className="mr-2 text-gray-700">Hi, Jenny</span>
-          <img src={Jenny.src} alt="User" className="h-8 w-8 rounded-full" />
+          <span className="mr-2 text-gray-700 text-lg">Hi, Jenny</span> {/* Increased font size */}
+          <img src={Jenny.src} alt="User" className="h-12 w-12 rounded-full" /> {/* Increased size */}
         </div>
       </div>
     </header>
   );
 }
+
 export default Header;
