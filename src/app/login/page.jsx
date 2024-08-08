@@ -1,18 +1,21 @@
 "use client";
 import React, { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../utils/firebase";
+import { auth , firestore } from "../../utils/firebase";
 import { useRouter } from "next/navigation";
 import * as Yup from "yup";
 import ReusableForm from "../../components/ReusableForm";
 import AuthAside from "../../components/AuthAside";
 import TallySide from "../../assets/TallySide.svg";
 import WavyLines from "../../assets/WavyLines.svg";
+import { doc, getDoc } from "firebase/firestore";
+import { useAuth } from "@/utils/useAuth";
 
 const Login = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const { setUserDoc } = useAuth(); 
 
   const initialValues = {
     email: "",
@@ -31,9 +34,24 @@ const Login = () => {
   const onSubmit = async (values) => {
     setLoading(true);
     setErrorMessage("");
-
+  
     try {
-      await signInWithEmailAndPassword(auth, values.email, values.password);
+      const userCredential = await signInWithEmailAndPassword(auth, values.email, values.password);
+      const user = userCredential.user;
+  
+      console.log("User data:", user);
+  
+      const userDocRef = doc(firestore, `users/${user.uid}`);
+      const userDoc = await getDoc(userDocRef);
+  
+      if (userDoc.exists()) {
+        console.log("User document data user:", userDoc.data());
+        setUserDoc(userDoc.data());
+      } else {
+        console.log("No such document!");
+        setUserDoc(null);
+      }
+  
       router.push("/home");
     } catch (error) {
       setErrorMessage("Invalid email or password. Please try again.");

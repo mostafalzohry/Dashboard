@@ -1,7 +1,7 @@
 "use client";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import useAuth from "../utils/useAuth"; // Ensure this path points to your useAuth hook
+import { useAuth }  from "../utils/useAuth";
 
 const Index = () => {
   const router = useRouter();

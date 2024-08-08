@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import useAuth from "../../utils/useAuth";
+import { useAuth }from "../../utils/useAuth";
 import Dashboard from "../../components/Dashboard";
 
 const Home = () => {

@@ -3,11 +3,16 @@
 import Header from "../../components/Header";
 import ProfileAvatar from "../../assets/ProfileAvatar.png";
 import { useRouter } from "next/navigation";
-import useAuth from "../../utils/useAuth";
-import { useEffect } from "react";
+import { useAuth } from "../../utils/useAuth";
+import { useEffect, useState } from "react";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { app, firestore} from "../../utils/firebase";
+import { doc, updateDoc } from "firebase/firestore";
 
 const Profile = () => {
-  const { loading, authenticated } = useAuth();
+  const { loading, authenticated , userDoc, setUserDoc } = useAuth();
+  const [uploading, setUploading] = useState(false);
+  const [profilePic, setProfilePic] = useState(ProfileAvatar.src);
   const router = useRouter();
 
   useEffect(() => {
@@ -22,6 +27,34 @@ const Profile = () => {
     );
   }
 
+
+
+  const handleFileChange = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+  
+    const storage = getStorage(app);
+    const storageRef = ref(storage, `profile-pics/${file.name}`);
+  
+    try {
+      setUploading(true);
+      await uploadBytes(storageRef, file);
+      const url = await getDownloadURL(storageRef);
+  
+      if (userDoc && userDoc.uid) {
+        const userDocRef = doc(firestore, `users/${userDoc.uid}`);
+        await updateDoc(userDocRef, { profilePic: url });
+  
+        setUserDoc({ ...userDoc, profilePic: url });
+      }
+  
+      setProfilePic(url);
+    } catch (error) {
+      console.error("Error uploading file: ", error);
+    } finally {
+      setUploading(false);
+    }
+  };
   return (
     <div className="bg-gray-100 min-h-screen flex flex-col">
       <Header />
@@ -31,13 +64,33 @@ const Profile = () => {
             {/* Profile Section */}
             <div className="col-span-1 bg-white p-6 rounded-lg shadow-lg flex flex-col items-center">
               <img
-                src={ProfileAvatar.src}
+                src={profilePic}
                 alt="Profile"
                 className="w-24 h-24 rounded-full mb-4"
               />
-              <h2 className="text-xl font-semibold text-gray-900">
-                Haitham Badran
-              </h2>
+              <input
+                id="fileInput"
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                className="hidden"
+              />
+              <label
+                htmlFor="fileInput"
+                className="text-blue-500 cursor-pointer mt-2 mb-4"
+              >
+                Change Profile Picture
+              </label>
+              {uploading && <p>Uploading...</p>}
+              {loading ? (
+                <p>Loading...</p>
+              ) : authenticated ? (
+                <h2 className="text-xl font-semibold text-gray-900">
+                  Haitham Badran
+                </h2>
+              ) : (
+                <p>Please log in</p>
+              )}
               <p className="text-sm text-gray-500 mb-4">
                 Marketing Coordinator
               </p>

@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
-import { db } from "../utils/firebase";
+import { firestore } from "../utils/firebase";
 import girlAvatar from "../assets/girlAvatar.png"
 
 function LearnersList() {
@@ -13,10 +13,10 @@ function LearnersList() {
   
     const fetchData = async () => {
       try {
-        const learnersSnapshot = await getDocs(collection(db, "learners"));
+        const learnersSnapshot = await getDocs(collection(firestore, "learners"));
         const learnersData = learnersSnapshot.docs.map(doc => doc.data());
   
-        const languageBuddiesSnapshot = await getDocs(collection(db, "languageBuddies"));
+        const languageBuddiesSnapshot = await getDocs(collection(firestore, "languageBuddies"));
         const languageBuddiesData = languageBuddiesSnapshot.docs.map(doc => doc.data());
   
         setLearners(learnersData);
@@ -40,7 +40,7 @@ function LearnersList() {
       const collectionName = activeTab === 'Learners' ? 'learners' : 'languageBuddies';
       
       try {
-        const ref = collection(db, collectionName);
+        const ref = collection(firestore, collectionName);
         const snapshot = await getDocs(ref);
         
         const mappedItems = snapshot.docs.map((doc) => ({
