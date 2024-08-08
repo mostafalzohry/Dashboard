@@ -105,12 +105,12 @@ const Signup = () => {
         imageSrc={TallySide.src}
         text="'Het verbinden van nieuwkomers met de samenleving door hun taal te verbeteren'"
       />
-      <div className="w-full md:w-1/2 bg-white flex flex-col p-8 relative">
-        <div className="max-w-md mx-auto w-full relative z-10">
-          <h1 className="text-3xl font-bold mb-2 text-blue-900">
+      <div className="flex-1 bg-white flex flex-col justify-center p-6 md:p-8 relative h-full">
+        <div className="max-w-sm md:max-w-md mx-auto w-full relative z-10">
+          <h1 className="text-2xl md:text-3xl font-bold mb-2 text-blue-900">
             Welcome to Taaly!
           </h1>
-          <h2 className="text-xl mb-8">Sign Up Here</h2>
+          <h2 className="text-lg md:text-xl mb-6 md:mb-8">Sign Up Here</h2>
           <ReusableForm
             initialValues={initialValues}
             validationSchema={validationSchema}
@@ -132,7 +132,7 @@ const Signup = () => {
         <img
           src={WavyLines.src}
           alt="Wavy Lines"
-          className="absolute bottom-0 left-0 w-full z-0"
+          className="absolute bottom-0 left-0 w-full z-0 block"
         />
       </div>
     </main>
