@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../utils/firebase";
-
+import girlAvatar from "../assets/girlAvatar.png"
 
 function LearnersList() {
     const [activeTab, setActiveTab] = useState('Learners');
@@ -119,7 +119,14 @@ function LearnersList() {
           </svg>
         </div>
         {loading ? (
-          <p>Loading...</p>
+            <div
+            className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-surface motion-reduce:animate-[spin_1.5s_linear_infinite] dark:text-white"
+            role="status"
+          >
+            <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+              Loading...
+            </span>
+          </div>
         ) : (
         <table className="w-full">
           <thead>
@@ -138,8 +145,8 @@ function LearnersList() {
               <tr key={index} className="border-b last:border-b-0">
                 <td className="py-4 flex items-center">
                   <img
-                    src={`/avatar-placeholder-${index + 1}.jpg`}
-                    alt={person.name}
+                      src={girlAvatar.src}
+                      alt={person.name}
                     className="w-8 h-8 rounded-full mr-2"
                   />
                   {person.name}
