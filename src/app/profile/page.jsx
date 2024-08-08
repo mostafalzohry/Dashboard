@@ -200,7 +200,7 @@ const Profile = () => {
                 </div>
 
                 {/* Right Section */}
-                <div className="md:w-2/3 bg-custom-light-purple p-6 rounded-lg shadow-lg mt-8 md:mt-0 md:ml-8">
+                {/* <div className="md:w-2/3 bg-custom-light-purple p-6 rounded-lg shadow-lg mt-8 md:mt-0 md:ml-8">
                   <h2 className="text-indigo-800 text-xl font-semibold mb-4">
                     Impact Measurement
                   </h2>
@@ -210,50 +210,123 @@ const Profile = () => {
                         <th className="pb-4">Questions</th>
                         <th className="pb-4 text-center">T0</th>
                         <th className="pb-4 text-center">T1</th>
-                        <th className="pb-4 text-center">T2</th>
-                        <th className="pb-4 text-center">T3</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td className="py-2">
-                          Lorem ipsum dolor sit amet consectetur?
-                        </td>
-                        <td className="py-2 text-center">7</td>
-                        <td className="py-2 text-center">4</td>
-                        <td className="py-2 text-center">8</td>
-                        <td className="py-2 text-center">9</td>
-                      </tr>
-                      <tr>
-                        <td className="py-2">
-                          Lorem ipsum dolor sit amet consectetur?
-                        </td>
-                        <td className="py-2 text-center">4</td>
+                        <td className="py-2">1. Ik versta goed nederlands</td>
                         <td className="py-2 text-center">5</td>
-                        <td className="py-2 text-center">7</td>
-                        <td className="py-2 text-center">8</td>
+                        <td className="py-2 text-center">6</td>
+                      </tr>
+                      <tr>
+                        <td className="py-2">2. Ik spreek goed nederlands</td>
+                        <td className="py-2 text-center">5</td>
+                        <td className="py-2 text-center">6</td>
                       </tr>
                       <tr>
                         <td className="py-2">
-                          Lorem ipsum dolor sit amet consectetur?
+                          3. Ik durf nederlands te spreken met nederlandse
+                          mensen
                         </td>
                         <td className="py-2 text-center">5</td>
-                        <td className="py-2 text-center">3</td>
                         <td className="py-2 text-center">6</td>
-                        <td className="py-2 text-center">8</td>
                       </tr>
                       <tr>
                         <td className="py-2">
-                          Lorem ipsum dolor sit amet consectetur?
+                          4. Ik voel me goed omdat ik nederlands spreek
                         </td>
+                        <td className="py-2 text-center">5</td>
                         <td className="py-2 text-center">6</td>
-                        <td className="py-2 text-center">4</td>
-                        <td className="py-2 text-center">7</td>
-                        <td className="py-2 text-center">8</td>
+                      </tr>
+                      <tr>
+                        <td className="py-2">
+                          5. Ik durf nieuwe dingen buitenshuis te doen omdat ik
+                          nederlands spreek
+                        </td>
+                        <td className="py-2 text-center">5</td>
+                        <td className="py-2 text-center">6</td>
+                      </tr>
+                      <tr>
+                        <td className="py-2">
+                          6. Ik ben actief buitenshuis (bibliotheek, sport,
+                          bioscoopwinkelen, reizen met openbaar vervoer)
+                        </td>
+                        <td className="py-2 text-center">5</td>
+                        <td className="py-2 text-center">6</td>
+                      </tr>
+                      <tr>
+                        <td className="py-2">
+                          7. Ik doe mee aan activiteiten in de buurt
+                          (straatfeest, koffie-ochtend, buurthuis)
+                        </td>
+                        <td className="py-2 text-center">5</td>
+                        <td className="py-2 text-center">6</td>
+                      </tr>
+                      <tr>
+                        <td className="py-2">8. Ik heb vrijwilligerswerk</td>
+                        <td className="py-2 text-center">5</td>
+                        <td className="py-2 text-center">6</td>
                       </tr>
                     </tbody>
                   </table>
-                </div>
+                </div> */}
+
+<div className="md:w-2/3 bg-custom-light-purple p-6 rounded-lg shadow-lg mt-8 md:mt-0 md:ml-8">
+  <h2 className="text-indigo-800 text-xl font-bold mb-4">Impact Measurement</h2>
+  <table className="w-full">
+    <thead>
+      <tr className="text-left text-indigo-800">
+        <th className="pb-4">Questions</th>
+        <th className="pb-4 text-center">T0</th>
+        <th className="pb-4 text-center">T1</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td className="py-2">1. Ik versta goed nederlands</td>
+        <td className="py-2 text-center">5</td>
+        <td className="py-2 text-center">6</td>
+      </tr>
+      <tr>
+        <td className="py-2">2. Ik spreek goed nederlands</td>
+        <td className="py-2 text-center">5</td>
+        <td className="py-2 text-center">6</td>
+      </tr>
+      <tr>
+        <td className="py-2">3. Ik durf nederlands te spreken met nederlandse mensen</td>
+        <td className="py-2 text-center">5</td>
+        <td className="py-2 text-center">6</td>
+      </tr>
+      <tr>
+        <td className="py-2">4. Ik voel me goed omdat ik nederlands spreek</td>
+        <td className="py-2 text-center">5</td>
+        <td className="py-2 text-center">6</td>
+      </tr>
+      <tr>
+        <td className="py-2">5. Ik durf nieuwe dingen buitenshuis te doen omdat ik nederlands spreek</td>
+        <td className="py-2 text-center">5</td>
+        <td className="py-2 text-center">6</td>
+      </tr>
+      <tr>
+        <td className="text-left overflow-hidden whitespace-pre-line">6. Ik ben actief buitenshuis (bibliotheek, sport, bioscoopwinkelen, reizen met openbaar vervoer)</td>
+        <td className="py-2 text-center">5</td>
+        <td className="py-2 text-center">6</td>
+      </tr>
+      <tr>
+        <td className="py-2">7. Ik doe mee aan activiteiten in de buurt (straatfeest, koffie-ochtend, buurthuis)</td>
+        <td className="py-2 text-center">5</td>
+        <td className="py-2 text-center">6</td>
+      </tr>
+      <tr>
+        <td className="py-2">8. Ik heb vrijwilligerswerk</td>
+        <td className="py-2 text-center">5</td>
+        <td className="py-2 text-center">6</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
               </div>
             </div>
           </div>
