@@ -1,17 +1,20 @@
-"use client"
-import { signOut } from 'firebase/auth';
+"use client";
+import { signOut } from "firebase/auth";
 import Jenny from "../assets/Jenny.png";
-import { auth } from '@/utils/firebase';
+import { auth } from "@/utils/firebase";
 
 function Header() {
-
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      window.location.href = "/login"; 
+      window.location.href = "/login";
     } catch (error) {
       console.error("Error logging out:", error);
     }
+  };
+
+  const handleNavigation = () => {
+    window.location.href = "/profile";
   };
 
   return (
@@ -26,7 +29,7 @@ function Header() {
             xmlns="http://www.w3.org/2000/svg"
             className="mr-2"
           >
-              <svg
+            <svg
               width="85"
               height="75"
               viewBox="0 0 85 75"
@@ -103,8 +106,18 @@ function Header() {
           </div>
         </div>
         <div className="flex items-center space-x-4">
-          <span className="text-gray-700 text-lg">Hi, Jenny</span>
-          <img src={Jenny.src} alt="User" className="h-12 w-12 rounded-full" />
+          <div
+            onClick={handleNavigation}
+            className="flex items-center cursor-pointer"
+          >
+            <span className="text-gray-700 text-lg mr-2">Hi, Jenny</span>
+            <img
+              src={Jenny.src}
+              alt="User"
+              className="h-12 w-12 rounded-full"
+            />
+          </div>
+
           <button
             onClick={handleLogout}
             className="flex items-center text-gray-700 hover:text-red-600 focus:outline-none"

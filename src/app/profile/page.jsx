@@ -1,7 +1,27 @@
+"use client";
+
 import Header from "../../components/Header";
-import ProfileAvatar from '../../assets/ProfileAvatar.png';
+import ProfileAvatar from "../../assets/ProfileAvatar.png";
+import { useRouter } from "next/navigation";
+import useAuth from "../../utils/useAuth";
+import { useEffect } from "react";
 
 const Profile = () => {
+  const { loading, authenticated } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!loading && !authenticated) {
+      router.push("/login");
+    }
+  }, [loading, authenticated, router]);
+
+  if (loading || !authenticated) {
+    return (
+      <div className="border-gray-300 h-20 w-20 animate-spin rounded-full border-8 border-t-blue-600" />
+    );
+  }
+
   return (
     <div className="bg-gray-100 min-h-screen flex flex-col">
       <Header />
@@ -11,8 +31,8 @@ const Profile = () => {
             {/* Profile Section */}
             <div className="col-span-1 bg-white p-6 rounded-lg shadow-lg flex flex-col items-center">
               <img
-  src={ProfileAvatar.src}
-  alt="Profile"
+                src={ProfileAvatar.src}
+                alt="Profile"
                 className="w-24 h-24 rounded-full mb-4"
               />
               <h2 className="text-xl font-semibold text-gray-900">
