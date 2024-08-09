@@ -39,7 +39,6 @@ const Login = () => {
       const userCredential = await signInWithEmailAndPassword(auth, values.email, values.password);
       const user = userCredential.user;
   
-      console.log("User data:", user);
   
       const userDocRef = doc(firestore, `users/${user.uid}`);
       const userDoc = await getDoc(userDocRef);

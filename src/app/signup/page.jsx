@@ -61,7 +61,6 @@ const Signup = () => {
         phoneNumber: values.phoneNumber,
         uid: user.uid,
       });
-      console.log("User created:", user);
       router.push("/login");
     } catch (error) {
       console.error("Error signing up:", error.message);
