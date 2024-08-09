@@ -1,9 +1,9 @@
-"use client"
-import { useEffect, useState, createContext, useContext } from 'react';
-import { auth } from './firebase'; 
-import { onAuthStateChanged } from 'firebase/auth';
-import { doc, getDoc } from 'firebase/firestore';
-import { firestore } from './firebase'; 
+"use client";
+import { useEffect, useState, createContext, useContext } from "react";
+import { auth } from "./firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+import { firestore } from "./firebase";
 
 const AuthContext = createContext();
 
@@ -37,7 +37,9 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ loading, authenticated, userDoc , setUserDoc }}>
+    <AuthContext.Provider
+      value={{ loading, authenticated, userDoc, setUserDoc }}
+    >
       {children}
     </AuthContext.Provider>
   );

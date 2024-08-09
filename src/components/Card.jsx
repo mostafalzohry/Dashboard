@@ -1,4 +1,3 @@
-// components/Card.js
 import React from 'react';
 
 const Card = ({ title, children, bgColor }) => {

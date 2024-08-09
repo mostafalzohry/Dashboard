@@ -179,11 +179,58 @@ const DetailCard = ({ title, content }) => (
 );
 
 
+const MeasurementCard = ({ title, color, value, unit, progress }) => {
+  const radius = 45; 
+  const circumference = 2 * Math.PI * radius;
+  const progressValue = (progress / 100) * circumference;
+  
+  const rotation = -90; 
+
+  return (
+    <div className="flex flex-col items-center bg-custom-light-purple p-6 rounded-lg flex-1">
+      <h2 className={`text-2xl font-bold mb-2`} style={{ color }}>{title}</h2>
+      <p className="text-gray-600 text-base mb-6 text-center">Hours spent by Learner over this program</p>
+      <div className="relative flex items-center justify-center w-48 h-48">
+        <svg
+          className="w-full h-full"
+          viewBox="0 0 100 100"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle
+            cx="50"
+            cy="50"
+            r={radius}
+            fill="none"
+            stroke="#e0e0e0" 
+            strokeWidth="8"
+          />
+          <circle
+            cx="50"
+            cy="50"
+            r={radius}
+            fill="none"
+            stroke={color}
+            strokeWidth="8"
+            strokeDasharray={circumference}
+            strokeDashoffset={circumference - progressValue}
+            style={{ transform: `rotate(${rotation}deg)`, transformOrigin: '50% 50%' }}
+            className="transition-all duration-500"
+          />
+        </svg>
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <span className="text-5xl font-bold" style={{ color }}>{value}</span>
+          <span className="text-xl font-medium" style={{ color }}>{unit}</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const ImpactMeasurement = () => (
   <div className="flex flex-col md:flex-row rounded-lg shadow-lg flex-grow">
     <div className="flex flex-col space-y-8 md:w-1/3 h-full">
-      <MeasurementCard title="Hours spent" color="#1E00B9" value={200} unit="hours" />
-      <MeasurementCard title="Remaining" color="#B4E13C" value={200} unit="credits" />
+      <MeasurementCard title="Hours spent" color="#1E00B9" value={100} unit="hours" progress={75} />
+      <MeasurementCard title="Remaining" color="#B4E13C" value={100} unit="credits" progress={65} />
     </div>
     <div className="md:w-2/3 bg-custom-light-purple p-6 rounded-lg shadow-lg mt-8 md:mt-0 md:ml-8 flex-grow">
       <h2 className="text-indigo-800 text-xl font-bold mb-4">Impact Measurement</h2>
@@ -192,32 +239,6 @@ const ImpactMeasurement = () => (
   </div>
 );
 
-const MeasurementCard = ({ title, color, value, unit }) => (
-  <div className="flex flex-col items-center bg-custom-light-purple p-6 rounded-lg flex-1">
-    <h2 className={`text-2xl font-bold mb-2`} style={{ color }}>{title}</h2>
-    <p className="text-gray-600 text-base mb-6 text-center">Hours spent by Learner over this program</p>
-    <div className="relative flex items-center justify-center w-48 h-48">
-      <svg
-        className="w-full h-full"
-        viewBox="0 0 100 100"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <circle
-          cx="50"
-          cy="50"
-          r="45"
-          fill="none"
-          stroke={color}
-          strokeWidth="8"
-        />
-      </svg>
-      <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="text-5xl font-bold" style={{ color }}>{value}</span>
-        <span className="text-xl font-medium" style={{ color }}>{unit}</span>
-      </div>
-    </div>
-  </div>
-);
 
 const ImpactTable = () => (
   <table className="w-full">
