@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { firestore } from "../utils/firebase";
 import girlAvatar from "../assets/girlAvatar.png";
+import axios from "axios";
 
 function LearnersList() {
   const [activeTab, setActiveTab] = useState("Learners");
@@ -17,35 +18,27 @@ function LearnersList() {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const learnersSnapshot = await getDocs(collection(firestore, "learners"));
-      const learnersData = learnersSnapshot.docs.map((doc) => doc.data());
 
-      const languageBuddiesSnapshot = await getDocs(
-        collection(firestore, "languageBuddies")
-      );
-      const languageBuddiesData = languageBuddiesSnapshot.docs.map((doc) =>
-        doc.data()
-      );
+      const apiUrl = `https://dashboard-6bmez8hb4-mostafalzohrys-projects.vercel.app/api/learners`;
 
-      setTotalItems(
-        activeTab === "Learners"
-          ? learnersData.length
-          : languageBuddiesData.length
-      );
+      const response = await axios.get(apiUrl);
+      const data = response.data;
 
-      const paginatedLearners = learnersData.slice(
-        (currentPage - 1) * itemsPerPage,
-        currentPage * itemsPerPage
-      );
-      const paginatedLanguageBuddies = languageBuddiesData.slice(
+      setTotalItems(data.length);
+
+      // Paginate data
+      const paginatedData = data.slice(
         (currentPage - 1) * itemsPerPage,
         currentPage * itemsPerPage
       );
 
-      setLearners(paginatedLearners);
-      setLanguageBuddies(paginatedLanguageBuddies);
+      if (activeTab === "Learners") {
+        setLearners(paginatedData);
+      } else {
+        setLanguageBuddies(paginatedData);
+      }
     } catch (error) {
-      console.error("Error fetching data from Firestore: ", error);
+      console.error("Error fetching data from API: ", error);
     } finally {
       setLoading(false);
     }
