@@ -18,27 +18,35 @@ function LearnersList() {
   const fetchData = async () => {
     try {
       setLoading(true);
+      const learnersSnapshot = await getDocs(collection(firestore, "learners"));
+      const learnersData = learnersSnapshot.docs.map((doc) => doc.data());
 
-      const apiUrl = `https://dashboard-6bmez8hb4-mostafalzohrys-projects.vercel.app/api/learners`;
+      const languageBuddiesSnapshot = await getDocs(
+        collection(firestore, "languageBuddies")
+      );
+      const languageBuddiesData = languageBuddiesSnapshot.docs.map((doc) =>
+        doc.data()
+      );
 
-      const response = await axios.get(apiUrl);
-      const data = response.data;
+      setTotalItems(
+        activeTab === "Learners"
+          ? learnersData.length
+          : languageBuddiesData.length
+      );
 
-      setTotalItems(data.length);
-
-      // Paginate data
-      const paginatedData = data.slice(
+      const paginatedLearners = learnersData.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+      );
+      const paginatedLanguageBuddies = languageBuddiesData.slice(
         (currentPage - 1) * itemsPerPage,
         currentPage * itemsPerPage
       );
 
-      if (activeTab === "Learners") {
-        setLearners(paginatedData);
-      } else {
-        setLanguageBuddies(paginatedData);
-      }
+      setLearners(paginatedLearners);
+      setLanguageBuddies(paginatedLanguageBuddies);
     } catch (error) {
-      console.error("Error fetching data from API: ", error);
+      console.error("Error fetching data from Firestore: ", error);
     } finally {
       setLoading(false);
     }
