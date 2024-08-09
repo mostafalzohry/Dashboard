@@ -13,21 +13,20 @@ import WavyLines from "../../assets/WavyLines.svg";
 const Signup = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(""); 
 
   const initialValues = {
     FullName: "",
     email: "",
     password: "",
     confirmPassword: "",
-    phoneNumber: "", 
-
+    phoneNumber: "",
   };
 
   const validationSchema = Yup.object({
     FullName: Yup.string()
       .min(3, "Must be 3 characters or more")
-      .required("First name is required"),
-   
+      .required("Full name is required"),
     email: Yup.string()
       .email("Invalid email address")
       .required("Email is required"),
@@ -44,6 +43,8 @@ const Signup = () => {
 
   const onSubmit = async (values) => {
     setLoading(true);
+    setErrorMessage(""); 
+
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -52,7 +53,7 @@ const Signup = () => {
       );
       const user = userCredential.user;
       await updateProfile(user, {
-        displayName: `${values.firstName} ${values.lastName}`,
+        displayName: values.FullName,
       });
       await setDoc(doc(firestore, "users", user.uid), {
         FullName: values.FullName,
@@ -64,6 +65,8 @@ const Signup = () => {
       router.push("/login");
     } catch (error) {
       console.error("Error signing up:", error.message);
+      setErrorMessage(error.message);
+    } finally {
       setLoading(false);
     }
   };
@@ -75,7 +78,6 @@ const Signup = () => {
       placeholder: "Full Name",
       label: "Full Name",
     },
-   
     {
       name: "email",
       type: "email",
@@ -109,7 +111,7 @@ const Signup = () => {
         text="'Het verbinden van nieuwkomers met de samenleving door hun taal te verbeteren'"
       />
 
-      <div className="flex-1 bg-white flex flex-col p-8  p-6  relative h-full">
+      <div className="flex-1 bg-white flex flex-col p-8 p-6 relative h-full">
         <div className="max-w-sm md:max-w-md mx-auto w-full relative z-10">
           <h1 className="text-2xl md:text-3xl font-bold mb-2 text-blue-900">
             Welcome to Taaly!
@@ -122,7 +124,11 @@ const Signup = () => {
             fields={fields}
             buttonLabel="Sign Up"
             loading={loading}
+            errorMessage={errorMessage}
           />
+          {errorMessage && (
+            <p className="mt-4 text-red-600 text-center">{errorMessage}</p>
+          )}
           <span className="mt-4 block text-center text-blue-600">
             Already have an account?{" "}
             <button
