@@ -80,8 +80,9 @@ const Profile = () => {
 };
 
 const LoadingSpinner = () => (
+  <div className="flex items-center justify-center h-full">
   <div className="border-gray-300 h-20 w-20 animate-spin rounded-full border-8 border-t-blue-600" />
-);
+</div>   );
 
 const ProfileSidebar = ({ userDoc, profilePic, handleFileChange, uploading , navigateHome }) => (
   <div className="bg-custom-light-purple min-h-screen p-6">
