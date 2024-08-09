@@ -56,8 +56,8 @@ const Profile = () => {
     <div className="bg-gray-100 min-h-screen flex flex-col">
     <Header />
     <div className="flex flex-1">
-      <div className="min-h-screen bg-white p-8 w-full">
-        <div className="w-full grid grid-cols-1 lg:grid-cols-4 gap-6">
+      <div className="min-h-screen bg-white p-8 w-full flex flex-col">
+        <div className="w-full grid grid-cols-1 lg:grid-cols-4 gap-6 flex-1">
           <ProfileSidebar
             userDoc={userDoc}
             profilePic={profilePic}
@@ -133,22 +133,25 @@ const DetailItem = ({ icon, title, content }) => (
 );
 
 
+
+
 const ProfileDetails = () => (
-  <div className="lg:col-span-3 space-y-6">
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+  <div className="lg:col-span-3 flex flex-col h-full"> 
+    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 flex-1 overflow-hidden mb-4"> 
       <DetailCard title="Mother Language" content="Arabic" />
       <DetailCard title="Other Languages" content={["English", "German"]} />
       <DetailCard title="Level" content="Med B2" />
       <DetailCard title="Interests" content={["Reading", "Hiking"]} />
     </div>
-    <ImpactMeasurement />
+    <ImpactMeasurement className="flex-grow" /> 
   </div>
 );
 
+
 const DetailCard = ({ title, content }) => (
-  <div className="bg-custom-light-purple p-4 rounded-lg shadow-lg">
-    <h3 className="text-sm font-semibold text-black mb-4">{title}</h3> {/* mb-4 adds margin below the title */}
-    <div className="text-sm text-gray-700 flex flex-wrap items-center gap-2">
+  <div className="bg-custom-light-purple p-4 rounded-lg shadow-lg flex flex-col h-full">
+    <h3 className="text-lg font-semibold text-black mb-2 truncate">{title}</h3> 
+    <div className="text-sm text-gray-700 flex flex-wrap items-center gap-2 flex-1 overflow-auto">
       {Array.isArray(content) ? (
         content.map((item, index) => (
           <span key={index} className="flex items-center bg-white text-purple-600 py-1 px-3 rounded-full">
@@ -167,25 +170,25 @@ const DetailCard = ({ title, content }) => (
 );
 
 
-
 const ImpactMeasurement = () => (
-  <div className="flex flex-col md:flex-row rounded-lg shadow-lg">
-    <div className="flex flex-col space-y-8 md:w-1/3">
+  <div className="flex flex-col md:flex-row rounded-lg shadow-lg flex-grow"> {/* Ensure full height with flex-grow */}
+    <div className="flex flex-col space-y-8 md:w-1/3 h-full"> {/* Ensure full height */}
       <MeasurementCard title="Hours spent" color="purple" percentage={90} value={200} />
       <MeasurementCard title="Remaining" color="lime" percentage={90} value={200} />
     </div>
-    <div className="md:w-2/3 bg-custom-light-purple p-6 rounded-lg shadow-lg mt-8 md:mt-0 md:ml-8">
+    <div className="md:w-2/3 bg-custom-light-purple p-6 rounded-lg shadow-lg mt-8 md:mt-0 md:ml-8 flex-grow">
       <h2 className="text-indigo-800 text-xl font-bold mb-4">Impact Measurement</h2>
       <ImpactTable />
     </div>
   </div>
 );
 
+
 const MeasurementCard = ({ title, color, percentage, value }) => (
-  <div className={`flex flex-col items-center bg-custom-light-purple p-6 rounded-lg`}>
-    <p className="mt-4 text-gray-700 text-lg">{title}</p>
-    <p className="text-gray-600 text-sm mb-2">Hours spent by Learner over this program</p>
-    <div className="relative">
+  <div className={`flex flex-col items-center bg-custom-light-purple p-6 rounded-lg flex-1`}> {/* Added flex-1 */}
+    <p className="mt-4 text-gray-700 text-lg text-center">{title}</p> {/* Centered text */}
+    <p className="text-gray-600 text-sm mb-2 text-center">Hours spent by Learner over this program</p> {/* Centered text */}
+    <div className="relative flex-1 flex items-center justify-center"> {/* Added flex-1 */}
       <svg
         className="w-32 h-32"
         viewBox="0 0 36 36"
@@ -215,6 +218,7 @@ const MeasurementCard = ({ title, color, percentage, value }) => (
   </div>
 );
 
+
 const ImpactTable = () => (
   <table className="w-full">
     <thead>
@@ -226,6 +230,12 @@ const ImpactTable = () => (
       </tr>
     </thead>
     <tbody>
+      <TableRow title="English Listening" impact="High" progress="75%" complete="75%" />
+      <TableRow title="English Speaking" impact="Medium" progress="50%" complete="50%" />
+      <TableRow title="English Reading" impact="Low" progress="30%" complete="30%" />
+      <TableRow title="English Listening" impact="High" progress="75%" complete="75%" />
+      <TableRow title="English Speaking" impact="Medium" progress="50%" complete="50%" />
+      <TableRow title="English Reading" impact="Low" progress="30%" complete="30%" />
       <TableRow title="English Listening" impact="High" progress="75%" complete="75%" />
       <TableRow title="English Speaking" impact="Medium" progress="50%" complete="50%" />
       <TableRow title="English Reading" impact="Low" progress="30%" complete="30%" />
