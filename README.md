@@ -31,9 +31,5 @@ Open your browser and navigate to \`http://localhost:3000\` to see the applicati
 
 
 
----
 
-Feel free to contribute or raise issues on GitHub if you encounter any problems. Happy coding! 😄
-
----
 
