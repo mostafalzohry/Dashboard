@@ -22,14 +22,18 @@ function Header() {
     }
   };
 
-  const handleNavigation = () => {
+  const navigateProfile = () => {
     router.push("/profile");
+  };
+
+  const navigateHome = () => {
+    router.push("/");
   };
 
   return (
     <header className="custom-light-purple shadow-sm p-4">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
-        <div className="flex items-center">
+        <div className="flex items-center cursor-pointer" onClick={navigateHome}>
           <svg
             width="60"
             height="52"
@@ -87,7 +91,6 @@ function Header() {
                 </clipPath>
               </defs>
             </svg>
-            {/* SVG contents */}
           </svg>
           <span className="text-indigo-600 font-bold text-2xl">Taaly</span>
         </div>
@@ -116,7 +119,7 @@ function Header() {
         </div>
         <div className="flex items-center space-x-4">
           <div
-            onClick={handleNavigation}
+            onClick={navigateProfile}
             className="flex items-center cursor-pointer"
           >
             <span className="text-gray-700 text-lg mr-2">Hi, {userDoc.FullName}</span>

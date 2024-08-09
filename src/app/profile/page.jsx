@@ -15,6 +15,7 @@ const Profile = () => {
   const [profilePic, setProfilePic] = useState(ProfileAvatar.src);
   const router = useRouter();
 
+
   useEffect(() => {
     if (!loading && !authenticated) {
       router.push("/login");
@@ -51,6 +52,11 @@ const Profile = () => {
       setUploading(false);
     }
   };
+  const navigateHome = () => {
+    router.push("/");
+  };
+
+ 
 
   return (
     <div className="bg-gray-100 min-h-screen flex flex-col">
@@ -63,6 +69,7 @@ const Profile = () => {
             profilePic={profilePic}
             handleFileChange={handleFileChange}
             uploading={uploading}
+            navigateHome={navigateHome}
           />
           <ProfileDetails />
         </div>
@@ -76,10 +83,10 @@ const LoadingSpinner = () => (
   <div className="border-gray-300 h-20 w-20 animate-spin rounded-full border-8 border-t-blue-600" />
 );
 
-const ProfileSidebar = ({ userDoc, profilePic, handleFileChange, uploading }) => (
+const ProfileSidebar = ({ userDoc, profilePic, handleFileChange, uploading , navigateHome }) => (
   <div className="bg-custom-light-purple min-h-screen p-6">
     <div className="flex items-center mb-6">
-      <span className="text-2xl mr-4">←</span>
+      <span className="text-2xl mr-4 cursor-pointer" onClick={navigateHome}>←</span>
       <h1 className="text-2xl font-semibold">{userDoc.FullName}</h1>
     </div>
     <div className="bg-custom-light-purple p-6 max-w-md mx-auto">
