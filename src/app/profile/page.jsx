@@ -22,9 +22,7 @@ const Profile = () => {
   }, [loading, authenticated, router]);
 
   if (loading || !authenticated) {
-    return (
-      <div className="border-gray-300 h-20 w-20 animate-spin rounded-full border-8 border-t-blue-600" />
-    );
+    return <LoadingSpinner />;
   }
 
   const handleFileChange = async (event) => {
@@ -53,293 +51,217 @@ const Profile = () => {
       setUploading(false);
     }
   };
+
   return (
     <div className="bg-gray-100 min-h-screen flex flex-col">
-      <Header />
-      <div className="flex flex-1">
-        <div className="min-h-screen bg-white p-8">
-          <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-6">
-
-            <div className="bg-custom-light-purple min-h-screen p-6">
-              <div className="flex items-center mb-6">
-                <span className="text-2xl mr-4">←</span>
-                <h1 className="text-2xl font-semibold">{userDoc.FullName}</h1>
-              </div>
-
-              <div className="bg-custom-light-purple p-6  max-w-md mx-auto">
-                <div className="flex flex-col items-center mb-4">
-                  <img
-                    src={userDoc.profilePic ?? profilePic}
-                    alt="Profile"
-                    className="w-24 h-24 rounded-full border-4 border-blue-500 mb-2"
-                  />
-                  <input
-                    id="fileInput"
-                    type="file"
-                    accept="image/*"
-                    onChange={handleFileChange}
-                    className="hidden"
-                  />
-                  <label
-                    htmlFor="fileInput"
-                    className="text-blue-500 cursor-pointer text-sm"
-                  >
-                    {uploading ? "Uploading..." : "Change Profile Picture"}
-                  </label>
-                </div>
-                <h3 className="text-center font-semibold mb-2">Bio</h3>
-                <p className="text-center text-sm text-gray-700 mb-6">
-                  "I'm a marketing coordinator who recently moved to netherlands
-                  and I'm struggling with the dutch language"
-                </p>
-
-                <div className="space-y-4">
-                  <div className="flex items-center">
-                    <span className="mr-3">📧</span>
-                    <div>
-                      <p className="font-semibold">E-mail</p>
-                      <p className="text-gray-700">{userDoc.email}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center">
-                    <span className="mr-3">📞</span>
-                    <div>
-                      <p className="font-semibold">Mobile</p>
-                      <p className="text-gray-700">{userDoc.phoneNumber}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center">
-                    <span className="mr-3">📍</span>
-                    <div>
-                      <p className="font-semibold">Location</p>
-                      <p className="text-gray-700">
-                        6391 Elgin St. Celina, Delaware 10299
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-center">
-                    <span className="mr-3">🎓</span>
-                    <div>
-                      <p className="font-semibold">Highest Education</p>
-                      <p className="text-gray-700">BA Graphic Design</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center">
-                    <span className="mr-3">💼</span>
-                    <div>
-                      <p className="font-semibold">Latest work experience</p>
-                      <p className="text-gray-700">Marketing Coordinator</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="lg:col-span-3 space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div className="bg-custom-light-purple p-4 rounded-lg shadow-lg">
-                  <h3 className="text-sm font-semibold text-purple-600 mb-2">
-                    Mother Language
-                  </h3>
-                  <div className="text-sm text-gray-700">
-                    <span className="inline-block bg-purple-100 text-purple-600 py-1 px-3 rounded-full">
-                      Arabic
-                    </span>
-                  </div>
-                </div>
-
-                <div className="bg-custom-light-purple p-4 rounded-lg shadow-lg">
-                  <h3 className="text-sm font-semibold text-purple-600 mb-2">
-                    Other Languages
-                  </h3>
-                  <div className="flex space-x-2">
-                    <span className="inline-block bg-purple-100 text-purple-600 py-1 px-3 rounded-full">
-                      English
-                    </span>
-                    <span className="inline-block bg-purple-100 text-purple-600 py-1 px-3 rounded-full">
-                      German
-                    </span>
-                  </div>
-                </div>
-
-                <div className="bg-custom-light-purple p-4 rounded-lg shadow-lg">
-                  <h3 className="text-sm font-semibold text-purple-600 mb-2">
-                    Level
-                  </h3>
-                  <div className="text-sm text-gray-700">
-                    <span className="inline-block bg-purple-100 text-purple-600 py-1 px-3 rounded-full">
-                      Med B2
-                    </span>
-                  </div>
-                </div>
-
-                <div className="bg-custom-light-purple p-4 rounded-lg shadow-lg">
-                  <h3 className="text-sm font-semibold text-purple-600 mb-2">
-                    Interests
-                  </h3>
-                  <div className="flex space-x-2">
-                    <span className="inline-block bg-purple-100 text-purple-600 py-1 px-3 rounded-full">
-                      Reading
-                    </span>
-                    <span className="inline-block bg-purple-100 text-purple-600 py-1 px-3 rounded-full">
-                      Hiking
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex flex-col md:flex-row  rounded-lg shadow-lg">
-                <div className="flex flex-col space-y-8 md:w-1/3">
-                  <div className="flex flex-col items-center bg-custom-light-purple p-6 rounded-lg">
-                    <p className="mt-4 text-gray-700 text-lg">Hours spent</p>
-                    <p className="text-gray-600 text-sm mb-2">
-                      Hours spent by Learner over this program
-                    </p>
-                    <div className="relative">
-                      <svg
-                        className="w-32 h-32"
-                        viewBox="0 0 36 36"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          className="text-purple-200"
-                          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="4"
-                          strokeDasharray="100, 100"
-                        />
-                        <path
-                          className="text-purple-600"
-                          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="4"
-                          strokeDasharray="90, 100"
-                        />
-                      </svg>
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-2xl font-bold text-purple-600">
-                          200
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col items-center   bg-custom-light-purple  p-6 rounded-lg">
-                    <p className="mt-4 text-gray-700 text-lg">Remaining</p>
-                    <p className="text-gray-600 text-sm mb-2">
-                      Credit spent by Learner over this program
-                    </p>
-                    <div className="relative">
-                      <svg
-                        className="w-32 h-32"
-                        viewBox="0 0 36 36"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          className="text-lime-200"
-                          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="4"
-                          strokeDasharray="100, 100"
-                        />
-                        <path
-                          className="text-lime-500"
-                          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="4"
-                          strokeDasharray="90, 100"
-                        />
-                      </svg>
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-2xl font-bold text-lime-500">
-                          200
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="md:w-2/3 bg-custom-light-purple p-6 rounded-lg shadow-lg mt-8 md:mt-0 md:ml-8">
-                  <h2 className="text-indigo-800 text-xl font-bold mb-4">
-                    Impact Measurement
-                  </h2>
-                  <table className="w-full">
-                    <thead>
-                      <tr className="text-left text-indigo-800">
-                        <th className="pb-4">Questions</th>
-                        <th className="pb-4 text-center">T0</th>
-                        <th className="pb-4 text-center">T1</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td className="py-2">1. Ik versta goed nederlands</td>
-                        <td className="py-2 text-center">5</td>
-                        <td className="py-2 text-center">6</td>
-                      </tr>
-                      <tr>
-                        <td className="py-2">2. Ik spreek goed nederlands</td>
-                        <td className="py-2 text-center">5</td>
-                        <td className="py-2 text-center">6</td>
-                      </tr>
-                      <tr>
-                        <td className="py-2">
-                          3. Ik durf nederlands te spreken met nederlandse
-                          mensen
-                        </td>
-                        <td className="py-2 text-center">5</td>
-                        <td className="py-2 text-center">6</td>
-                      </tr>
-                      <tr>
-                        <td className="py-2">
-                          4. Ik voel me goed omdat ik nederlands spreek
-                        </td>
-                        <td className="py-2 text-center">5</td>
-                        <td className="py-2 text-center">6</td>
-                      </tr>
-                      <tr>
-                        <td className="py-2">
-                          5. Ik durf nieuwe dingen buitenshuis te doen omdat ik
-                          nederlands spreek
-                        </td>
-                        <td className="py-2 text-center">5</td>
-                        <td className="py-2 text-center">6</td>
-                      </tr>
-                      <tr>
-                        <td className="text-left overflow-hidden whitespace-pre-line">
-                          6. Ik ben actief buitenshuis (bibliotheek, sport,
-                          bioscoopwinkelen, reizen met openbaar vervoer)
-                        </td>
-                        <td className="py-2 text-center">5</td>
-                        <td className="py-2 text-center">6</td>
-                      </tr>
-                      <tr>
-                        <td className="py-2">
-                          7. Ik doe mee aan activiteiten in de buurt
-                          (straatfeest, koffie-ochtend, buurthuis)
-                        </td>
-                        <td className="py-2 text-center">5</td>
-                        <td className="py-2 text-center">6</td>
-                      </tr>
-                      <tr>
-                        <td className="py-2">8. Ik heb vrijwilligerswerk</td>
-                        <td className="py-2 text-center">5</td>
-                        <td className="py-2 text-center">6</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
+    <Header />
+    <div className="flex flex-1">
+      <div className="min-h-screen bg-white p-8 w-full">
+        <div className="w-full grid grid-cols-1 lg:grid-cols-4 gap-6">
+          <ProfileSidebar
+            userDoc={userDoc}
+            profilePic={profilePic}
+            handleFileChange={handleFileChange}
+            uploading={uploading}
+          />
+          <ProfileDetails />
         </div>
       </div>
     </div>
+  </div>
   );
 };
 
+const LoadingSpinner = () => (
+  <div className="border-gray-300 h-20 w-20 animate-spin rounded-full border-8 border-t-blue-600" />
+);
+
+const ProfileSidebar = ({ userDoc, profilePic, handleFileChange, uploading }) => (
+  <div className="bg-custom-light-purple min-h-screen p-6">
+    <div className="flex items-center mb-6">
+      <span className="text-2xl mr-4">←</span>
+      <h1 className="text-2xl font-semibold">{userDoc.FullName}</h1>
+    </div>
+    <div className="bg-custom-light-purple p-6 max-w-md mx-auto">
+      <div className="flex flex-col items-center mb-4">
+        <img
+          src={userDoc.profilePic ?? profilePic}
+          alt="Profile"
+          className="w-24 h-24 rounded-full border-4 border-blue-500 mb-2"
+        />
+        <input
+          id="fileInput"
+          type="file"
+          accept="image/*"
+          onChange={handleFileChange}
+          className="hidden"
+        />
+        <label
+          htmlFor="fileInput"
+          className="text-blue-500 cursor-pointer text-sm"
+        >
+          {uploading ? "Uploading..." : "Change Profile Picture"}
+        </label>
+      </div>
+      <h3 className="text-center font-semibold mb-2">Bio</h3>
+      <p className="text-center text-sm text-gray-700 mb-6">
+        "I'm a marketing coordinator who recently moved to Netherlands and I'm struggling with the Dutch language"
+      </p>
+      <ProfileDetailsInfo userDoc={userDoc} />
+    </div>
+  </div>
+);
+
+const ProfileDetailsInfo = ({ userDoc }) => (
+  <div className="space-y-4">
+    <DetailItem icon="📧" title="E-mail" content={userDoc.email} />
+    <DetailItem icon="📞" title="Mobile" content={userDoc.phoneNumber} />
+    <DetailItem icon="📍" title="Location" content="6391 Elgin St. Celina, Delaware 10299" />
+    <DetailItem icon="🎓" title="Highest Education" content="BA Graphic Design" />
+    <DetailItem icon="💼" title="Latest work experience" content="Marketing Coordinator" />
+  </div>
+);
+
+const DetailItem = ({ icon, title, content }) => (
+  <div className="flex items-center">
+    <span className="mr-3">{icon}</span>
+    <div>
+      <p className="font-semibold">{title}</p>
+      <p className="text-gray-700">{content}</p>
+    </div>
+  </div>
+);
+
+
+const ProfileDetails = () => (
+  <div className="lg:col-span-3 space-y-6">
+    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <DetailCard title="Mother Language" content="Arabic" />
+      <DetailCard title="Other Languages" content={["English", "German"]} />
+      <DetailCard title="Level" content="Med B2" />
+      <DetailCard title="Interests" content={["Reading", "Hiking"]} />
+    </div>
+    <ImpactMeasurement />
+  </div>
+);
+
+const DetailCard = ({ title, content }) => (
+  <div className="bg-custom-light-purple p-4 rounded-lg shadow-lg">
+    <h3 className="text-sm font-semibold text-black mb-4">{title}</h3> {/* mb-4 adds margin below the title */}
+    <div className="text-sm text-gray-700 flex flex-wrap items-center gap-2">
+      {Array.isArray(content) ? (
+        content.map((item, index) => (
+          <span key={index} className="flex items-center bg-white text-purple-600 py-1 px-3 rounded-full">
+            <LanguageIcon className="mr-2" />
+            {item}
+          </span>
+        ))
+      ) : (
+        <span className="flex items-center bg-white text-purple-600 py-1 px-3 rounded-full">
+          <LanguageIcon className="mr-2" />
+          {content}
+        </span>
+      )}
+    </div>
+  </div>
+);
+
+
+
+const ImpactMeasurement = () => (
+  <div className="flex flex-col md:flex-row rounded-lg shadow-lg">
+    <div className="flex flex-col space-y-8 md:w-1/3">
+      <MeasurementCard title="Hours spent" color="purple" percentage={90} value={200} />
+      <MeasurementCard title="Remaining" color="lime" percentage={90} value={200} />
+    </div>
+    <div className="md:w-2/3 bg-custom-light-purple p-6 rounded-lg shadow-lg mt-8 md:mt-0 md:ml-8">
+      <h2 className="text-indigo-800 text-xl font-bold mb-4">Impact Measurement</h2>
+      <ImpactTable />
+    </div>
+  </div>
+);
+
+const MeasurementCard = ({ title, color, percentage, value }) => (
+  <div className={`flex flex-col items-center bg-custom-light-purple p-6 rounded-lg`}>
+    <p className="mt-4 text-gray-700 text-lg">{title}</p>
+    <p className="text-gray-600 text-sm mb-2">Hours spent by Learner over this program</p>
+    <div className="relative">
+      <svg
+        className="w-32 h-32"
+        viewBox="0 0 36 36"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          className={`text-${color}-200`}
+          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="4"
+          strokeDasharray="100, 100"
+        />
+        <path
+          className={`text-${color}-500`}
+          d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="4"
+          strokeDasharray={`${percentage}, 100`}
+        />
+      </svg>
+      <div className="absolute inset-0 flex items-center justify-center">
+        <span className={`text-2xl font-bold text-${color}-500`}>{value}</span>
+      </div>
+    </div>
+  </div>
+);
+
+const ImpactTable = () => (
+  <table className="w-full">
+    <thead>
+      <tr>
+        <th className="border-b px-4 py-2 text-left">Category</th>
+        <th className="border-b px-4 py-2 text-left">Impact</th>
+        <th className="border-b px-4 py-2 text-left">Progress</th>
+        <th className="border-b px-4 py-2 text-left">Complete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <TableRow title="English Listening" impact="High" progress="75%" complete="75%" />
+      <TableRow title="English Speaking" impact="Medium" progress="50%" complete="50%" />
+      <TableRow title="English Reading" impact="Low" progress="30%" complete="30%" />
+    </tbody>
+  </table>
+);
+
+const TableRow = ({ title, impact, progress, complete }) => (
+  <tr>
+    <td className="border-b px-4 py-2">{title}</td>
+    <td className="border-b px-4 py-2">{impact}</td>
+    <td className="border-b px-4 py-2">{progress}</td>
+    <td className="border-b px-4 py-2">{complete}</td>
+  </tr>
+);
+
 export default Profile;
+
+const LanguageIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    strokeWidth="1.5"
+    stroke="currentColor"
+    className="w-5 h-5 text-purple-600"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M12 3c4.97 0 9 4.03 9 9s-4.03 9-9 9-9-4.03-9-9 4.03-9 9-9z"
+    />
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M9 12h6m-3-3v6m-4.5 0h9M12 12v3"
+    />
+  </svg>
+);
